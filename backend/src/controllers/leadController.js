@@ -2,50 +2,50 @@ const Lead = require("../models/Lead");
 
 // Create New Lead
 exports.createLead = async (req, res) => {
-    try {
-        const {
-            name,
-            email,
-            phone,
-            propertyType,
-            location,
-            budget,
-            assignedTo,
-        } = req.body;
+  try {
+    const {
+      name,
+      email,
+      phone,
+      propertyType,
+      location,
+      budget,
+      assignedTo,
+    } = req.body;
 
-        // Basic validation
-        if (!name || !phone || !propertyType || !location || !budget) {
-            return res.status(400).json({
-                message: "Required fields are missing",
-            });
-        }
-
-        // Create lead
-        const newLead = await Lead.create({
-            name,
-            email,
-            phone,
-            propertyType,
-            location,
-            budget,
-            assignedTo,
-        });
-
-
-        // Send response
-        return res.status(201).json({
-            message: "Lead created successfully",
-            lead: newLead,
-        });
-
-    } catch (error) {
-
-        console.error("Create Lead Error:", error);
-
-        return res.status(500).json({
-            message: "Server error while creating lead",
-        });
+    // Basic validation
+    if (!name || !phone || !propertyType || !location || !budget) {
+      return res.status(400).json({
+        message: "Required fields are missing",
+      });
     }
+
+    // Create lead
+    const newLead = await Lead.create({
+      name,
+      email,
+      phone,
+      propertyType,
+      location,
+      budget,
+      assignedTo,
+    });
+
+
+    // Send response
+    return res.status(201).json({
+      message: "Lead created successfully",
+      lead: newLead,
+    });
+
+  } catch (error) {
+
+    console.error("Create Lead Error:", error);
+
+    return res.status(500).json({
+      message: "Server error while creating lead",
+    });
+  }
 };
 
 // Get Leads (with filters)
@@ -122,8 +122,7 @@ exports.getLeadById = async (req, res) => {
     }
 
     // Optional: Restrict STAFF to only view their own leads
-    if (req.user.role === "STAFF" && String(lead.assignedTo?._id) !== String(req.user._id))
-         {
+    if (req.user.role === "STAFF" && String(lead.assignedTo?._id) !== String(req.user._id)) {
       return res.status(403).json({
         message: "Access denied. You can only view your assigned leads.",
       });
@@ -186,7 +185,6 @@ exports.updateLead = async (req, res) => {
     });
   }
 }
-
 
 // Delete Lead
 // Route: DELETE /api/leads/:id
