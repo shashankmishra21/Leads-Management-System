@@ -1,16 +1,20 @@
 require("dotenv").config();
-const express = require("express");
-const app = express();
-const connectDB = require("./config/db");
+const express = require("express")
+const app = express()
+const connectDB = require("./config/db")
 const cors = require("cors");
-
+const leadRoutes = require("./routes/leadRoutes")
+const authRoutes = require("./routes/authRoutes")
 
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/auth/", authRoutes)
+app.use("/api/leads/", leadRoutes)
+
 
 app.get("/", (req, res) => {
-    res.json({ message: "Project Working" });
+    res.json({ message: "Project Working" })
 });
 
 const PORT = process.env.PORT || 5000;

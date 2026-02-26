@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-
 // Protect Routes Middleware
 
 module.exports = async (req, res, next) => {
